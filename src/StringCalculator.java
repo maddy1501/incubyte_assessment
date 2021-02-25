@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,9 +17,7 @@ public class StringCalculator {
             }
             else{
                 String[] numArray = numbers.split(",");
-                int num1 = Integer.parseInt(numArray[0]);
-                int num2 = Integer.parseInt(numArray[1]);
-                return num1 + num2;
+                return Arrays.stream(numArray).mapToInt(Integer::parseInt).sum();
             }
         }
         return 0;
