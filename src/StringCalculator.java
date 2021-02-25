@@ -10,13 +10,14 @@ public class StringCalculator {
         Matcher m = p.matcher(str);
         return m.matches();
     }
+    //point 3 add functionality to consider \n as a delimiter
     public int add(String numbers){
         if(numbers != null && !numbers.isEmpty()){
             if(onlyDigits(numbers)){//if only numbers are present in the number string
                 return Integer.parseInt(numbers);
             }
             else{
-                String[] numArray = numbers.split(",");
+                String[] numArray = numbers.split("[,\n]");
                 return Arrays.stream(numArray).mapToInt(Integer::parseInt).sum();
             }
         }
