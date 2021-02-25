@@ -44,8 +44,13 @@ class StringCalculatorTest {
         assertEquals(sum,s.add(toBeTested));
     }
     @Test
-    public void addHandleNewLinesBetweenNumbers(){
+    public void addHandleNewLinesBetweenNumbers(){//support for newLine character to seperate the numbers
         StringCalculator s = getInstance();
         assertEquals(6,s.add("1\n2,3"));
+    }
+    @Test
+    public void addIntroduceNewDelimiter(){
+        StringCalculator s = getInstance();
+        assertEquals(10,s.add("//&\n2&3&5"));
     }
 }
