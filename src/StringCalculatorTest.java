@@ -53,14 +53,16 @@ class StringCalculatorTest {
         StringCalculator s = getInstance();
         assertEquals(10,s.add("//&\n2&3&5"));
     }
-    @Test
-    public void addNegativeNumberException(){
-        Throwable exception = assertThrows(Exception.class, this::execute);
-        assertEquals("negatives not allowed -9", exception.getMessage());
+
+
+    private void execute(String numbers) throws Exception{
+        StringCalculator s = getInstance();
+        s.add(numbers);
     }
 
-    private void execute() throws Exception{
-        StringCalculator s = getInstance();
-        s.add("2,5,8,-9");
+    @Test
+    public void addMultipleNegativeNumberException(){
+        Throwable exception = assertThrows(Exception.class, () -> execute("2,5,8,-9,-15,18"));
+        assertEquals("negatives not allowed -9 -15", exception.getMessage());
     }
 }

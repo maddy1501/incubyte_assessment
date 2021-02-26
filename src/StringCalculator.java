@@ -27,12 +27,18 @@ public class StringCalculator {
                 numArray = numbers.split(regexDelimiter);
             }
             int sum = 0;
+            boolean ifNegative = false;
+            StringBuilder negatives = new StringBuilder();
             for(String number : numArray){
                 int num = Integer.parseInt(number);
-                if(num < 0){
-                    throw new Exception("negatives not allowed " + num);
+                if( num < 0 ){
+                    negatives.append(" ").append(number);
+                    ifNegative = true;
                 }
                 sum += num;
+            }
+            if(ifNegative){
+                throw new Exception("negatives not allowed" + negatives.toString());
             }
             return sum;
         }
