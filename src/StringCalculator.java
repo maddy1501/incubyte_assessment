@@ -2,6 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringCalculator {
+    private static int addCallCount = 0;
     private boolean onlyDigits(String str)
     {
         String regex = "[0-9]+";
@@ -15,6 +16,7 @@ public class StringCalculator {
     }
     //point 4 Support different delimiters
     public int add(String numbers) throws Exception {
+        addCallCount += 1;
         if(numbers != null && !numbers.isEmpty()){
             if(onlyDigits(numbers)){//if only numbers are present in the number string
                 return Integer.parseInt(numbers);
@@ -35,7 +37,7 @@ public class StringCalculator {
                     negatives.append(" ").append(number);
                     ifNegative = true;
                 }
-                sum += num;
+                else if(num <= 1000) sum += num;
             }
             if(ifNegative){
                 throw new Exception("negatives not allowed" + negatives.toString());
@@ -44,4 +46,5 @@ public class StringCalculator {
         }
         return 0;
     }
+    public int getCallCount() { return addCallCount; }
 }

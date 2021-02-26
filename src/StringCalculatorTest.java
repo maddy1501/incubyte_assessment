@@ -6,26 +6,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StringCalculatorTest {
 
-    private StringCalculator getInstance(){
-        return new StringCalculator();
+    private static int addCallCount = 0;
+
+    private int executeAdd(String numbers) throws Exception{
+        addCallCount += 1;
+        StringCalculator s = new StringCalculator();
+        return s.add(numbers);
     }
     //test for empty string
     @Test
     public void addEmptyString() throws Exception {
-        StringCalculator s = getInstance();
-        assertEquals(0,s.add(""));
+        assertEquals(0,executeAdd(""));
     }
     //test for one Number
     @Test
     public void addOneNumber() throws Exception {
-        StringCalculator s = getInstance();
-        assertEquals(100, s.add("100"));
+        assertEquals(100, executeAdd("100"));
     }
     //test for two Numbers
     @Test
     public void addTwoNumbers() throws Exception {
-        StringCalculator s = getInstance();
-        assertEquals(100, s.add("60,40"));
+        assertEquals(100, executeAdd("60,40"));
     }
     //test for a random amount of numbers
     @Test
@@ -39,30 +40,30 @@ class StringCalculatorTest {
             randomNumbers[i] = ""+rand;
             sum += rand;
         }
-        StringCalculator s = getInstance();
         String toBeTested = String.join(",", randomNumbers);
-        assertEquals(sum,s.add(toBeTested));
+        assertEquals(sum,executeAdd(toBeTested));
     }
     @Test
     public void addHandleNewLinesBetweenNumbers() throws Exception {//support for newLine character to seperate the numbers
-        StringCalculator s = getInstance();
-        assertEquals(6,s.add("1\n2,3"));
+        assertEquals(6,executeAdd("1\n2,3"));
     }
     @Test
     public void addIntroduceNewDelimiter() throws Exception {
-        StringCalculator s = getInstance();
-        assertEquals(10,s.add("//&\n2&3&5"));
-    }
-
-
-    private void execute(String numbers) throws Exception{
-        StringCalculator s = getInstance();
-        s.add(numbers);
+        assertEquals(10,executeAdd("//&\n2&3&5"));
     }
 
     @Test
     public void addMultipleNegativeNumberException(){
-        Throwable exception = assertThrows(Exception.class, () -> execute("2,5,8,-9,-15,18"));
+        Throwable exception = assertThrows(Exception.class, () -> executeAdd("2,5,8,-9,-15,18"));
         assertEquals("negatives not allowed -9 -15", exception.getMessage());
+    }
+    @Test
+    public void getCalledCountTest(){
+        StringCalculator s = new StringCalculator();
+        assertEquals(addCallCount, s.getCallCount());
+    }
+    @Test
+    public void addNumberBiggerThan1000ShouldBeIgnored() throws Exception{
+        assertEquals(15+25+20+9,executeAdd("15,25,2000,1001,20,9"));
     }
 }
