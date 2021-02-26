@@ -49,7 +49,7 @@ class StringCalculatorTest {
     }
     @Test
     public void addIntroduceNewDelimiter() throws Exception {
-        assertEquals(10,executeAdd("//&\n2&3&5"));
+        assertEquals(17,executeAdd("//&\n2&3&5\n7"));
     }
 
     @Test
@@ -65,5 +65,17 @@ class StringCalculatorTest {
     @Test
     public void addNumberBiggerThan1000ShouldBeIgnored() throws Exception{
         assertEquals(15+25+20+9,executeAdd("15,25,2000,1001,20,9"));
+    }
+    @Test
+    public void addDelimiterOfAnyLength() throws Exception{
+        assertEquals(1+2+3, executeAdd("//[***]\n1***2***3"));
+    }
+    @Test
+    public void addAllowMultipleDelimiters() throws Exception{
+        assertEquals(6,executeAdd("//[*][%]\n1*2%3"));
+    }
+    @Test
+    public void addMultipleDelimiterWithLengthLongerThanOneCharacter() throws Exception{
+        assertEquals(6,executeAdd("//[**][%%]\n1**2%%3"));
     }
 }
